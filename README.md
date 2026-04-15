@@ -1,73 +1,57 @@
-# React + TypeScript + Vite
+# 🦆 今天呱了嗎？ - 國泰抽獎系統 (Cathay Lottery)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+這是一個為尾牙/春酒活動設計的趣味抽獎系統。結合了復古點陣圖（Pixel Art）風格與活潑的「鴨鴨」主題，提供一套流暢、充滿驚喜，又帶有手動刮刮樂樂趣的網頁互動抽獎體驗！
 
-Currently, two official plugins are available:
+## 🌟 系統特色與功能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **輕鬆匯入名單**：支援直接上傳 `.xlsx` 格式的員工清單檔案，或手動貼上文字。
+- **獎項自由設定**：支援新增、修改、刪除抽獎獎項，並可直接拖拉排序決定抽獎順序。
+- **洗牌與選卡機制**：獨創の洗牌與抽卡畫面，支援「手動點選卡片」與「電腦自動選卡」。
+- **線上數位刮刮樂**：用滑鼠或觸控螢幕刮除螢幕塗層，開出最終大獎！支援自動刮開功能並帶有灑滿全螢幕的彩帶慶祝特效。
+- **結果匯出**：抽獎完畢後可以一鍵匯出中獎者圖片，也能下載包含「得獎恭喜信件內容」的 Excel 檔案，方便後續寄信通知中獎者！
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 專案啟動教學
 
-## Expanding the ESLint configuration
+如果您剛將此專案 Clone 下載到您的電腦上，請按照以下步驟來啟動這個專案：
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. 環境需求 (Prerequisites)
+確保您的電腦上已經安裝了 **[Node.js](https://nodejs.org/en/)** (建議使用 v18 以上版本)。
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. 下載專案 (Clone Repository)
+打開您的終端機 (Terminal) 或命令提示字元，輸入以下指令將專案下載至電腦中：
+```bash
+git clone https://github.com/ida623/Cathay-Lottery.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 3. 進入專案資料夾
+```bash
+cd Cathay-Lottery
 ```
+
+### 4. 安裝依賴套件 (Install Dependencies)
+執行以下指令，系統會自動根據 `package.json` 幫您下載所有需要的延伸模組與套件 (如 React, Vite 等)：
+```bash
+npm install
+```
+
+### 5. 啟動本機伺服器 (Start Development Server)
+安裝完成後，輸入以下指令即可啟動運作：
+```bash
+npm run dev
+```
+
+成功啟動後，終端機會顯示一串本機網址（通常預設為 `http://localhost:5173/`）。
+直接點擊該連結 或 複製到瀏覽器打開，就可以開始體驗抽獎系統囉！🎉
+
+---
+
+## 🛠 開發相關指令 (Scripts)
+
+在開發或維護過程中，您可能會用到以下幾個指令：
+
+- `npm run dev`：啟動開發伺服器（含有熱更新 HMR 功能）
+- `npm run build`：進入正式環境佈署前，把整個系統編譯並打包到 `dist` 資料夾內
+- `npm run preview`：可以先預覽剛剛打包出來的正式檔案是否運作正常
+- `npm run lint`：執行 ESLint 去幫忙揪出程式碼的潛藏語法問題
