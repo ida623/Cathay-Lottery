@@ -9,8 +9,6 @@ export default function ParticipantsScreen() {
   const [activeTab, setActiveTab] = useState<'text' | 'excel'>('excel');
   const [textInput, setTextInput] = useState('');
   
-  // Filtering state
-  const [selectedDepts, setSelectedDepts] = useState<string[]>([]);
   const [selectedUnits, setSelectedUnits] = useState<string[]>([]);
 
   // Parse Text
@@ -37,7 +35,6 @@ export default function ParticipantsScreen() {
       if (parsed.length > 0) {
         setParticipants(parsed);
         setFilteredParticipants(parsed);
-        setSelectedDepts(Array.from(new Set(parsed.map(p => p.dept).filter(Boolean))));
         setSelectedUnits(Array.from(new Set(parsed.map(p => p.unit).filter(Boolean))));
       } else {
         playSound('error');
@@ -82,21 +79,16 @@ export default function ParticipantsScreen() {
       
       setParticipants(parsed);
       setFilteredParticipants(parsed);
-      setSelectedDepts(Array.from(new Set(parsed.map(p => p.dept).filter(Boolean))));
       setSelectedUnits(Array.from(new Set(parsed.map(p => p.unit).filter(Boolean))));
     };
     reader.readAsBinaryString(file);
   };
 
-  const allDepts = useMemo(() => Array.from(new Set(participants.map(p => p.dept).filter(Boolean))), [participants]);
   const allUnits = useMemo(() => Array.from(new Set(participants.map(p => p.unit).filter(Boolean))), [participants]);
 
   const handleApplyFilter = () => {
     playSound('click');
     let filtered = [...participants];
-    if (selectedDepts.length > 0) {
-      filtered = filtered.filter(p => selectedDepts.includes(p.dept));
-    }
     if (selectedUnits.length > 0) {
       filtered = filtered.filter(p => selectedUnits.includes(p.unit));
     }
@@ -104,21 +96,11 @@ export default function ParticipantsScreen() {
     setStep('prizes');
   };
 
-  const toggleDept = (dept: string) => {
-    setSelectedDepts(prev => prev.includes(dept) ? prev.filter(d => d !== dept) : [...prev, dept]);
-  };
   const toggleUnit = (unit: string) => {
     setSelectedUnits(prev => prev.includes(unit) ? prev.filter(u => u !== unit) : [...prev, unit]);
   };
 
   // 全選功能
-  const selectAllDepts = () => {
-    if (selectedDepts.length === allDepts.length) {
-      setSelectedDepts([]); // 取消全選
-    } else {
-      setSelectedDepts(allDepts);
-    }
-  };
 
   const selectAllUnits = () => {
     if (selectedUnits.length === allUnits.length) {
@@ -171,42 +153,22 @@ export default function ParticipantsScreen() {
       ) : (
         <div className="flex flex-col gap-4">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'var(--duck-yellow-lighter)', padding: '1rem', border: '4px solid var(--border-color)' }}>
-            <span style={{ fontWeight: 'bold' }}>◆ 總人數：{participants.length} 人</span>
+            <span style={{ fontWeight: 'bold' }}>◆ 總人數：{selectedUnits.length > 0 ? participants.filter(p => selectedUnits.includes(p.unit)).length : participants.length} 人</span>
             <button className="btn" style={{ fontSize: '0.9rem', padding: '0.5rem' }} onClick={() => { setParticipants([]); }}>
               重新匯入
             </button>
           </div>
 
           <div style={{ border: '4px solid var(--border-color)', padding: '1.5rem', backgroundColor: '#fff' }}>
-            <h3 style={{ marginBottom: '1.5rem', borderBottom: '4px solid var(--border-color)', paddingBottom: '0.5rem' }}>選擇部門/單位</h3>
-            
-            <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <label style={{ fontWeight: 'bold' }}>部門</label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
-                  <input type="checkbox" checked={selectedDepts.length === allDepts.length} onChange={selectAllDepts} style={{ accentColor: 'var(--tree-green)', transform: 'scale(1.2)' }} />
-                  全選
-                </label>
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                {allDepts.map(d => {
-                  const count = participants.filter(p => p.dept === d).length;
-                  return (
-                  <label key={d} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', backgroundColor: selectedDepts.includes(d) ? 'var(--tree-green-light)' : '#eee', padding: '0.5rem 1rem', border: '2px solid var(--border-color)', borderRadius: '20px', cursor: 'pointer' }}>
-                    <input type="checkbox" checked={selectedDepts.includes(d)} onChange={() => toggleDept(d)} style={{ accentColor: 'var(--tree-green)' }}/> {d} ({count})
-                  </label>
-                )})}
-              </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '4px solid var(--border-color)', paddingBottom: '0.5rem' }}>
+              <h3 style={{ margin: 0 }}>選擇單位</h3>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                <input type="checkbox" checked={selectedUnits.length === allUnits.length} onChange={selectAllUnits} style={{ accentColor: 'var(--tree-green)', transform: 'scale(1.2)' }} />
+                全選
+              </label>
             </div>
 
             <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <label style={{ fontWeight: 'bold' }}>單位</label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
-                  <input type="checkbox" checked={selectedUnits.length === allUnits.length} onChange={selectAllUnits} style={{ accentColor: 'var(--tree-green)', transform: 'scale(1.2)' }} />
-                  全選
-                </label>
-              </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                 {allUnits.map(u => {
                   const count = participants.filter(p => p.unit === u).length;

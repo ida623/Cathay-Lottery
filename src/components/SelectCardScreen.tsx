@@ -29,7 +29,7 @@ export default function SelectCardScreen() {
 
   // 如果剩餘人數少於要抽的獎項數，就以上限為準，並處理 TypeScript 型別 (number | '')
   const prizeCount = Math.min(Number(prize.count) || 1, currentPool.length);
-  const enforceAuto = currentPool.length > 100;
+  const enforceAuto = currentPool.length > 200;
 
   const drawWinners = (count: number) => {
     const pool = [...currentPool];
@@ -73,14 +73,14 @@ export default function SelectCardScreen() {
 
   return (
     <div className="card text-center" style={{ maxWidth: '800px', margin: '2rem auto' }}>
-      <h2 style={{ color: 'var(--tree-green)', margin: '1rem 0' }}>抽獎環節：【{prize.name}】</h2>
+      <h2 style={{ color: 'var(--tree-green)', margin: '1rem 0' }}>抽獎環節：【{prize.name}】 {prize.item}</h2>
       <p style={{ color: 'var(--text-light)', marginBottom: '1rem' }}>
         預計抽出 {prizeCount} 名幸運兒！
       </p>
 
       {enforceAuto ? (
         <div style={{ backgroundColor: 'var(--bg-color)', padding: '2rem', border: '4px solid var(--border-color)', marginTop: '2rem' }}>
-          <p style={{ color: 'var(--text-dark)', marginBottom: '2rem' }}>目前名單人數超過 100 人，為了最佳體驗，採用電腦隨機選卡模式。</p>
+          <p style={{ color: 'var(--text-dark)', marginBottom: '2rem' }}>目前名單人數超過 200 人，為了最佳體驗，採用電腦隨機選卡模式。</p>
           <button className="btn btn-primary" onClick={handleAutoDraw}>
             電腦幫我選
           </button>
@@ -96,7 +96,7 @@ export default function SelectCardScreen() {
                 <span style={{ color: 'var(--tree-green)', fontWeight: 'bold' }}>(選擇完成)</span>
               )}
             </div>
-            <button className="btn btn-secondary" onClick={handleAutoDraw}>
+            <button className="btn btn-secondary" onClick={handleAutoDraw} disabled={selectedIndices.length > 0} style={{ opacity: selectedIndices.length > 0 ? 0.4 : 1, cursor: selectedIndices.length > 0 ? 'not-allowed' : 'pointer' }}>
               電腦幫我選
             </button>
             {cardsLeft === 0 && (
@@ -164,9 +164,6 @@ export default function SelectCardScreen() {
         </div>
       )}
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2rem' }}>
-        <button className="btn btn-outline" onClick={() => { setStep('prizes'); }}>上一步</button>
-      </div>
     </div>
   );
 }

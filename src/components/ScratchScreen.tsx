@@ -148,7 +148,7 @@ export default function ScratchScreen() {
 
   return (
     <div className="card text-center" style={{ maxWidth: '800px', margin: '2rem auto' }}>
-      <h2 style={{ color: 'var(--tree-green)', margin: '1rem 0' }}>開獎啦：【{prize.name}】</h2>
+      <h2 style={{ color: 'var(--tree-green)', margin: '1rem 0' }}>開獎啦：【{prize.name}】 {prize.item}</h2>
       
       {isScratched && (
         <motion.div
@@ -203,7 +203,7 @@ export default function ScratchScreen() {
             }}>
               <img src="/duck_icon.png" alt="duck" className="pixelated" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
               <div style={{ fontWeight: 'bold', fontSize: '1.4rem' }}>{p.name}</div>
-              <div style={{ fontSize: '1rem', color: 'var(--text-light)' }}>{p.dept} <br/> {p.unit}</div>
+              <div style={{ fontSize: '1rem', color: 'var(--text-light)' }}>{p.unit}</div>
             </div>
           ))}
         </div>

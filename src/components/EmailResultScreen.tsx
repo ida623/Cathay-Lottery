@@ -53,11 +53,6 @@ export default function EmailResultScreen() {
     }
   };
 
-  const toggleEmail = () => {
-    playSound('click');
-    setShowEmail(!showEmail);
-  };
-
   return (
     <div className="card" style={{ maxWidth: '800px', margin: '2rem auto' }}>
       <div ref={resultRef}>
@@ -78,11 +73,11 @@ export default function EmailResultScreen() {
                 </div>
                 <div style={{ padding: '1rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '1rem' }}>
                   {prizeWinners.map(w => (
-                    <div key={w.id} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'var(--bg-color)', border: '2px solid var(--border-color)', padding: '0.5rem' }}>
-                      <img src="/duck_icon.png" alt="duck" className="pixelated" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
-                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <div style={{ fontWeight: 'bold', textAlign: 'center' }}>{w.name}</div>
-                        <div style={{ fontSize: '0.7rem', textAlign: 'center' }}>{w.unit}</div>
+                    <div key={w.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', backgroundColor: 'var(--bg-color)', border: '2px solid var(--border-color)', padding: '0.5rem' }}>
+                      <img src="/duck_icon.png" alt="duck" className="pixelated" style={{ width: '24px', height: '24px', objectFit: 'contain', flexShrink: 0 }} />
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <div style={{ fontWeight: 'bold' }}>{w.name}</div>
+                        <div style={{ fontSize: '0.7rem' }}>{w.unit}</div>
                       </div>
                     </div>
                   ))}
