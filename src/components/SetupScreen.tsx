@@ -36,7 +36,7 @@ export default function SetupScreen() {
             id="activityName"
             type="text"
             className="input"
-            placeholder="例如：2026年終旺年會"
+            placeholder="例如：2026年5月午餐會"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
