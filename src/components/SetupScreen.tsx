@@ -3,13 +3,14 @@ import { useAppStore } from '../store';
 import { playSound } from '../audio';
 
 export default function SetupScreen() {
-  const { activityName, setActivityName, setStep } = useAppStore();
+  const { activityName, setActivityName, setStep, resetLottery } = useAppStore();
   const [name, setName] = useState(activityName);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
       playSound('click');
+      resetLottery();
       setActivityName(name.trim());
       setStep('participants');
     }

@@ -4,12 +4,14 @@ import * as XLSX from 'xlsx';
 import { playSound } from '../audio';
 
 export default function ParticipantsScreen() {
-  const { setParticipants, setFilteredParticipants, setStep, participants } = useAppStore();
+  const { setParticipants, setFilteredParticipants, setStep, participants, filteredParticipants } = useAppStore();
 
   const [activeTab, setActiveTab] = useState<'text' | 'excel'>('excel');
   const [textInput, setTextInput] = useState('');
-  
-  const [selectedUnits, setSelectedUnits] = useState<string[]>([]);
+
+  const [selectedUnits, setSelectedUnits] = useState<string[]>(() =>
+    Array.from(new Set(filteredParticipants.map(p => p.unit).filter(Boolean)))
+  );
 
   // Parse Text
   const handleParseText = () => {
